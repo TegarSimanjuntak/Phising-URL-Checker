@@ -44,7 +44,7 @@ def check_link_safety(api_key, url_to_check):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    api_key = "YOUR_API_KEY"  # Ganti dengan API key kamu
+    api_key = "AIzaSyDAxlSl0EcRm-wljz1ynZ4I471mZyBZ0hY"  # Ganti dengan API key kamu
     result = None
     url = None
     
