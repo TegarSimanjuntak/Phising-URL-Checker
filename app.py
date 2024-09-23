@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template_string, request
 import requests
 import validators
 
@@ -28,7 +28,7 @@ def check_link_safety(api_key, url_to_check):
     
     params = {"key": api_key}
     response = requests.post(safe_browsing_url, json=payload, params=params)
-    
+
     # Logging untuk memeriksa respons
     print(f"Response Code: {response.status_code}")
     print(f"Response Text: {response.text}")
@@ -44,7 +44,7 @@ def check_link_safety(api_key, url_to_check):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    api_key = "AIzaSyDAxlSl0EcRm-wljz1ynZ4I471mZyBZ0hY"  # Ganti dengan API key kamu
+    api_key = "YOUR_API_KEY"  # Ganti dengan API key kamu
     result = None
     url = None
     
@@ -63,7 +63,24 @@ def index():
         else:
             result = "URL tidak valid."
 
-    return render_template('index.html', result=result, url=url)
+    # Render HTML langsung dari string
+    html_content = f"""
+    <!doctype html>
+    <html>
+    <head>
+        <title>URL Checker</title>
+    </head>
+    <body>
+        <h1>URL Checker</h1>
+        <form method="post">
+            <input type="text" name="url" placeholder="Masukkan URL" required>
+            <button type="submit">Periksa</button>
+        </form>
+        <h2>Hasil: {result}</h2>
+    </body>
+    </html>
+    """
+    return render_template_string(html_content)
 
 if __name__ == '__main__':
     app.run(debug=True)
